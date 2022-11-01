@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Apperçus Javascript Vanilla</title>
+</head>
+
+<body>
+    <input type='file' onchange='openFile(event)'><br>
+    <img id='output'>
+</body>
+
+</html>
+<script>
+    function openFile(event) {
+        //Au changement d'état de l'input on déclenche la fonction openFile.
+        let input = event.target; //"event.target" retourne l'evenement cibler c'est a dire le chargement de l'image dans l'input, on met l'input cibler dans la variable input.
+        //console.log(event.target);
+        let reader = new FileReader();
+        //L'objet FileReader permet de lire le contenue du fichier envoyer via un input de type file
+        reader.onload = function () {
+        //Si l'objet FileReader arriver a lire le fichier envoyer dans l'input de type file, alors on déclenche une fonction une fois que le fichier est charger
+            let dataURL = reader.result;
+            //On lis le contenue du fichier charger grâce à la propriéter .result
+            //console.log(reader.result);
+            let output = document.getElementById('output');
+            //On capture l'id de la balise img vers laquelle on veut faire apparaître le contenue du fichier
+            output.src = dataURL;
+            //On change l'attribut src de la balise img capturer plus haut, on lui donne en valeur le contenue de dataURL, qui est le contenue de notre fichier charger dans l'objet FileReader
+        };
+        reader.readAsDataURL(input.files[0]);
+        //input.file[0] indique qu'on capture le premier fichier envoyer dans l'input de type file, un input de type file peu contenir plusieur fichier si l'attribut multiple est spécifié.
+        //readAsDataURL va lire le contenue du fichier sous forme de donnée URL.
+    };
+</script>
